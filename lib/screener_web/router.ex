@@ -16,6 +16,7 @@ defmodule ScreenerWeb.Router do
   scope "/", ScreenerWeb do
     pipe_through :browser # Use the default browser stack
     get "/stocks", StockController, :index
+    get "/stocks/history/:ticker", HistoryController, :show
     get "/stocks/quotes/:ticker", StockQuoteController, :show
     get "/", PageController, :index
   end

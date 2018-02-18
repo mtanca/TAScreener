@@ -1,14 +1,17 @@
 defmodule ScreenerWeb.HistoryController do
   use ScreenerWeb, :controller
+  alias ScreenerWeb.Models.Helpers
 
   def show(conn, %{"ticker" => ticker}) do
+    results = Helpers.get_stock_quote(ticker)
+
     api_response =
+    case results do
+      { :error, reason } -> { :error, reason }
+      { :ok, quotes } -> quotes
+    end
 
-    ticker
-    |> StockQuote.get_stock_history
-    |> StockQuote.handle_response
-
-    render conn, "show.html", response: api_response
+    render conn, "show.html", history: api_response
   end
 
 end

@@ -1,5 +1,15 @@
 <h1> Get a Quote: </h1>
 
-<%= for s <- @symbols do %>
-  <p> <%= link s, to: stock_quote_path(@conn, :show, char_to_string(s)) %> </p>
-<% end %>
+
+<table>
+  <tr>
+    <th>Ticker Symbol</th>
+  </tr>
+  <%= for s <- @symbols do %>
+  <tr>
+    <td><%= s %></td>
+    <td><%= link "Get Quote", to: stock_quote_path(@conn, :show, char_to_string(s)) %></td>
+    <td><%= link "Historical Quote", to: history_path(@conn, :show, char_to_string(s)) %></td>
+  </tr>
+  <% end %>
+</table>

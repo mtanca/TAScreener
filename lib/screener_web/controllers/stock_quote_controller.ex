@@ -1,13 +1,16 @@
 defmodule ScreenerWeb.StockQuoteController do
   use ScreenerWeb, :controller
   alias ScreenerWeb.StockQuote
+  alias ScreenerWeb.Models.Helpers
 
   def show(conn, %{"ticker" => ticker}) do
-    api_response =
+    results = Helpers.get_stock_quote(ticker)
 
-    ticker
-    |> StockQuote.get_stock_quote
-    |> StockQuote.handle_response
+    api_response =
+    case results do
+      { :error, reason } -> { :error, reason }
+      { :ok, quotes } -> StockQuote.retrieve_latest_quote(quotes)
+    end
 
     render conn, "show.html", response: api_response
   end
