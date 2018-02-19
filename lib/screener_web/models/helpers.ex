@@ -1,4 +1,5 @@
 defmodule ScreenerWeb.Models.Helpers do
+
   @key System.get_env("API_KEY")
 
   def get_stock_quote(ticker) do
@@ -8,7 +9,7 @@ defmodule ScreenerWeb.Models.Helpers do
       { :ok, %HTTPoison.Response{status_code: 200, body: body} } ->
         body
         |> convert_json
-        |> handle_response
+        |> handle_status_200
       { :error, %HTTPoison.Error{reason: reason} } ->
         return_error_status(reason)
     end
@@ -19,7 +20,7 @@ defmodule ScreenerWeb.Models.Helpers do
     Poison.decode(quotes_as_json)
   end
 
-  defp handle_response(data) do
+  defp handle_status_200(data) do
     case data do
       { :ok, %{"Error Message" => error_msg} } ->
         return_error_status(error_msg)
