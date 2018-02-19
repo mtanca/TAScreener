@@ -1,9 +1,8 @@
 defmodule ScreenerWeb.Models.Helpers do
 
-  @key System.get_env("API_KEY")
-
   def get_stock_quote(ticker) do
-    url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=#{ticker}&apikey=#{@key}"
+    key  = System.get_env("API_KEY")
+    url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=#{ticker}&apikey=#{key}"
 
     case HTTPoison.get(url) do
       { :ok, %HTTPoison.Response{status_code: 200, body: body} } ->
