@@ -42,7 +42,8 @@ defmodule Screener.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 1.0"},
-      {:poison, "~> 2.0"}
+      {:poison, "~> 2.0"},
+      {:statistics, "~> 0.5.0"}
     ]
   end
 
