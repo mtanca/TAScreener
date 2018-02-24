@@ -43,7 +43,8 @@ defmodule Screener.Mixfile do
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 1.0"},
       {:poison, "~> 2.0"},
-      {:statistics, "~> 0.5.0"}
+      {:statistics, "~> 0.5.0"},
+      {:credo, "~> 0.9.0-rc1", only: [:dev, :test], runtime: false}
     ]
   end
 

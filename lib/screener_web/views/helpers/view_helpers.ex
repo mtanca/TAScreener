@@ -1,4 +1,6 @@
 defmodule ScreenerWeb.Views.Helpers do
+  @moduledoc """
+  """
 
   def capitalize(field) do
     String.capitalize(field)
@@ -12,7 +14,7 @@ defmodule ScreenerWeb.Views.Helpers do
   end
 
   def to_int(number) do
-    { integer, _ } = Float.parse(number)
+    {integer, _} = Float.parse(number)
     Float.round(integer, 3)
   end
 
