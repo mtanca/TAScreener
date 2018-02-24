@@ -1,6 +1,7 @@
 defmodule ScreenerWeb.HistoryController do
   use ScreenerWeb, :controller
   alias ScreenerWeb.Controllers.Helpers
+  alias ScreenerWeb.TechnicalAnalysis, as: TA
 
   def show(conn, %{"ticker" => ticker}) do
     results = Helpers.get_stock_quotes(ticker)
@@ -11,7 +12,9 @@ defmodule ScreenerWeb.HistoryController do
       {:ok, quotes} -> quotes
     end
 
-    render conn, "show.html", history: response
+    indicators = TA.get_indicators(elem(results,1))
+
+    render conn, "show.html", response: %{data: response, technical_indicators: indicators}
   end
 
 end

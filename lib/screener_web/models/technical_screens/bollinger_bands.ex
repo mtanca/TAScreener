@@ -4,10 +4,11 @@ defmodule ScreenerWeb.BollingerBands do
   Bollinger Bands® are volatility bands placed above and below a moving average.
   Volatility is based on the standard deviation, which changes as volatility increases and decreases.
 
-  Formula:
+  Steps:
   1.) Middle Band = 20-day simple moving average (SMA)
   2.) Upper Band = 20-day SMA + (20-day standard deviation of price x 2)
   3.) Lower Band = 20-day SMA - (20-day standard deviation of price x 2)
+
  """
 
   def bollinger_bands(data, period \\ 20) do
@@ -47,7 +48,7 @@ defmodule ScreenerWeb.BollingerBands do
   end
 
   defp get_bands(avg, std) do
-    {:ok, %{lower_band: lower_band(avg, std), upper_band: upper_band(avg, std)}}
+    %{"Lower Band" => lower_band(avg, std), "Upper Band" => upper_band(avg, std)}
   end
 
   def get_closing_prices(data, period) do
