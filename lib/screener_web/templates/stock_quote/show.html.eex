@@ -1,16 +1,19 @@
 <div> <h1>  Ticker Quote: </h1> </div>
 
-<%= case @response do %>
-  <%= { :error, _reason } -> %>
-    <p> Sorry, there was an error! </p>
-    <p> The issue is most likely with your ticker symbol. Please verify it is still valid. </p>
+<%= case @response.data do %>
+
+  <%= {:error, _reason} -> %>
+    <%= render ScreenerWeb.APIErrorsView, "api_errors.html", assigns %>
+
   <% _ -> %>
     <div>
-       <%= for { date, quote_info } <- @response do %>
+       <%= for { date, quote_info } <- @response.data do %>
         <h4>  <%= date %></h4>
-        <%= for { quote_field, value } <- quote_info do %>
+        <%= for {quote_field, value} <- quote_info do %>
           <p> <%= remove_non_letter_chars(quote_field) |> capitalize %>: <%= to_int(value) %> </p>
         <% end %>
       <% end %>
     </div>
 <% end %>
+
+<%= render ScreenerWeb.TechnicalIndicatorsView, "technical_indicators.html", assigns %>

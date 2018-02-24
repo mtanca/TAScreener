@@ -1,0 +1,6 @@
+<div>
+  <h5> Technical Indicators: </h>
+    <%= for {indicator, values} <- @response.technical_indicators do %>
+      <h6>  <%= indicator %>: <%= Enum.map(values, fn {field, value} -> "#{field}: #{round_int(value)} " end) %> </h6>
+    <% end %>
+</div>

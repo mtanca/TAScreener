@@ -1,9 +1,8 @@
 <div> <h1>  Ticker History: </h1> </div>
 
-<%= case @history do %>
+<%= case @response.data do %>
   <%= { :error, _reason } -> %>
-    <p> Sorry, there was an error! </p>
-    <p> The issue is most likely with your ticker symbol. Please verify it is still valid. </p>
+  <%= render ScreenerWeb.APIErrorsView, "api_errors.html", assigns %>
   <% _ -> %>
     <div>
       <table>
@@ -15,7 +14,7 @@
           <th>Volume</th>
         </tr>
         <tr>
-       <%= for { date, quote_info } <- @history do %>
+       <%= for { date, quote_info } <- @response.data do %>
         <td> <%= date %> </td>
         <%= for { _quote_field, value } <- quote_info do %>
           <td> <%= to_int(value) %> </td>
@@ -25,3 +24,5 @@
     </table>
   </div>
 <% end %>
+
+<%= render ScreenerWeb.TechnicalIndicatorsView, "technical_indicators.html", assigns %>

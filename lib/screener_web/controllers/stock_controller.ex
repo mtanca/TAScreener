@@ -3,8 +3,7 @@ defmodule ScreenerWeb.StockController do
   alias ScreenerWeb.Symbol
 
   def index(conn, _params) do
-    symbols = Symbol.get_symbols
-    |> Enum.sort
+    symbols = Symbol.get_symbols |> Enum.sort
 
     render conn, "index.html", symbols: symbols
   end

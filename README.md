@@ -13,7 +13,7 @@ Before you run your Phoenix server setup your API key:
 
   * Get your API key here: https://www.alphavantage.co/support/#api-key
   * Create a local env file with: `$ touch .env`
-  * Add your key to your .env file: `$ export API_KEY="<YOUR API KEY>"`
+  * Add the following line to your .env file: `export API_KEY="<YOUR API KEY>"`
   * Run: `$ source .env`
   * Don't be a chump... make sure to add your .env file to .gitignore
 
