@@ -1,4 +1,5 @@
 defmodule ScreenerWeb.Views.Helpers do
+  require IEx
   @moduledoc """
   """
 
@@ -15,7 +16,11 @@ defmodule ScreenerWeb.Views.Helpers do
 
   def to_int(number) do
     {integer, _} = Float.parse(number)
-    Float.round(integer, 3)
+    round_int(integer)
+  end
+
+  def round_int(number) do
+    Float.round(number, 3)
   end
 
 end
