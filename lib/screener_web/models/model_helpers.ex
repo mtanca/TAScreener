@@ -1,4 +1,4 @@
-defmodule ScreenerWeb.Model.Helpers do
+defmodule ScreenerWeb.Models.Helpers do
   alias ScreenerWeb.BollingerBands
 
   @moduledoc """

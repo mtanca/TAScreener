@@ -1,10 +1,10 @@
 defmodule ScreenerWeb.HistoryController do
-  use ScreenerWeb, :controller
-  alias ScreenerWeb.Controllers.Helpers
+  alias ScreenerWeb.Models.Helpers, as: Model
   alias ScreenerWeb.TechnicalAnalysis, as: TA
+  use ScreenerWeb, :controller
 
   def show(conn, %{"ticker" => ticker}) do
-    results = Helpers.get_stock_quotes(ticker)
+    results = Model.get_stock_quotes(ticker)
 
     response =
     case results do

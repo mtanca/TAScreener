@@ -1,7 +1,7 @@
 <div> <h1>  Ticker History: </h1> </div>
 
 <%= case @response.data do %>
-  <%= { :error, _reason } -> %>
+  <%= {:error, _reason} -> %>
   <%= render ScreenerWeb.APIErrorsView, "api_errors.html", assigns %>
   <% _ -> %>
     <div>
@@ -14,9 +14,9 @@
           <th>Volume</th>
         </tr>
         <tr>
-       <%= for { date, quote_info } <- @response.data do %>
+       <%= for {date, quote_info} <- @response.data do %>
         <td> <%= date %> </td>
-        <%= for { _quote_field, value } <- quote_info do %>
+        <%= for {_quote_field, value} <- quote_info do %>
           <td> <%= to_int(value) %> </td>
         <% end %>
         </tr>

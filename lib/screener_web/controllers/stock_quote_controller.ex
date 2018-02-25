@@ -1,12 +1,11 @@
 defmodule ScreenerWeb.StockQuoteController do
-  use ScreenerWeb, :controller
   alias ScreenerWeb.StockQuote
-  alias ScreenerWeb.Controllers.Helpers
+  alias ScreenerWeb.Models.Helpers, as: Model
   alias ScreenerWeb.TechnicalAnalysis, as: TA
-  require IEx
+  use ScreenerWeb, :controller
 
   def show(conn, %{"ticker" => ticker}) do
-    results = Helpers.get_stock_quotes(ticker)
+    results = Model.get_stock_quotes(ticker)
 
     response =
     case results do
