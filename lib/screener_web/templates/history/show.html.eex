@@ -1,7 +1,7 @@
 <div> <h1>  Ticker History: </h1> </div>
 
 <%= case @response.data do %>
-  <%= {:error, _reason} -> %>
+  <%= {:error, reason} -> %>
   <%= render ScreenerWeb.APIErrorsView, "api_errors.html", assigns %>
   <% _ -> %>
     <div>
@@ -23,6 +23,6 @@
       <% end %>
     </table>
   </div>
-<% end %>
 
-<%= render ScreenerWeb.TechnicalIndicatorsView, "technical_indicators.html", assigns %>
+  <%= render ScreenerWeb.TechnicalIndicatorsView, "technical_indicators.html", assigns %>
+<% end %>
