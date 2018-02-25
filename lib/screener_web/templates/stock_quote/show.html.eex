@@ -12,5 +12,6 @@
         <% end %>
       <% end %>
     </div>
+          
     <%= render ScreenerWeb.TechnicalIndicatorsView, "technical_indicators.html", assigns %>
 <% end %>
