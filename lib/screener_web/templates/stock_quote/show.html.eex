@@ -1,10 +1,8 @@
 <div> <h1>  Ticker Quote: </h1> </div>
 
 <%= case @response.data do %>
-
-  <%= {:error, _reason} -> %>
+  <%= {:error, reason} -> %>
     <%= render ScreenerWeb.APIErrorsView, "api_errors.html", assigns %>
-
   <% _ -> %>
     <div>
        <%= for { date, quote_info } <- @response.data do %>
@@ -14,6 +12,6 @@
         <% end %>
       <% end %>
     </div>
-    
+          
     <%= render ScreenerWeb.TechnicalIndicatorsView, "technical_indicators.html", assigns %>
 <% end %>

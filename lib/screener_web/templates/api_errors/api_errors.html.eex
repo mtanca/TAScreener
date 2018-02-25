@@ -1,3 +1,5 @@
 <p> Sorry, there was an error! </p>
 <p> The issue is most likely with your ticker symbol. Please verify it is still valid. </p>
-<p> <%= elem(@response.data, 1)%> </p>
+
+<h5> Reason: </h5>
+<p> <%= elem(@response.data, 1) %> </p>

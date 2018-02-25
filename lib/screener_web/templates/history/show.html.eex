@@ -2,7 +2,7 @@
 
 <%= case @response.data do %>
   <%= {:error, reason} -> %>
-  <%= render ScreenerWeb.APIErrorsView, "api_errors.html", assigns %>
+    <%= render ScreenerWeb.APIErrorsView, "api_errors.html", assigns %>
   <% _ -> %>
     <div>
       <table>
