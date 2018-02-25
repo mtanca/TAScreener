@@ -1,6 +1,6 @@
 defmodule ScreenerWeb.StockQuoteController do
   alias ScreenerWeb.Controllers.Helpers
-  alias ScreenerWeb.Models.Helpers, as: Model
+  alias ScreenerWeb.Models.Helpers.API, as: Model
   use ScreenerWeb, :controller
 
   def show(conn, %{"ticker" => ticker}) do

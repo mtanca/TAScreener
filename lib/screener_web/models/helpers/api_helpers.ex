@@ -1,12 +1,7 @@
-defmodule ScreenerWeb.Models.Helpers do
-  alias ScreenerWeb.BollingerBands
-
+defmodule ScreenerWeb.Models.Helpers.API do
   @moduledoc """
+  Helper functions specifically for handling API call
   """
-
-  def get_technical_indicators(data) do
-    BollingerBands.bollinger_bands(data)
-  end
 
   def get_stock_quotes(ticker) do
     key  = System.get_env("API_KEY")
