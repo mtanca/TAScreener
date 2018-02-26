@@ -2,13 +2,13 @@ defmodule ScreenerWeb.BollingerBands do
   alias ScreenerWeb.Models.Helpers.Math, as: MathHelper
   @moduledoc """
 
-  Bollinger Bands® are volatility bands placed above and below a moving average.
-  Volatility is based on the standard deviation, which changes as volatility increases and decreases.
+    Bollinger Bands® are volatility bands placed above and below a moving average.
+    Volatility is based on the standard deviation, which changes as volatility increases and decreases.
 
-  Steps:
-  1.) Middle Band = 20-day simple moving average (SMA)
-  2.) Upper Band = 20-day SMA + (20-day standard deviation of price x 2)
-  3.) Lower Band = 20-day SMA - (20-day standard deviation of price x 2)
+    Steps:
+    1.) Middle Band = 20-day simple moving average (SMA)
+    2.) Upper Band = 20-day SMA + (20-day standard deviation of price x 2)
+    3.) Lower Band = 20-day SMA - (20-day standard deviation of price x 2)
 
  """
 
@@ -44,7 +44,7 @@ defmodule ScreenerWeb.BollingerBands do
     %{"Lower Band" => lower_band(avg, std), "Upper Band" => upper_band(avg, std)}
   end
 
-  def get_closing_prices(data, period) do
+  defp get_closing_prices(data, period) do
     data
     |> find_closing_prices
     |> format_as_list
