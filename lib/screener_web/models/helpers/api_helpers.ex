@@ -1,6 +1,6 @@
 defmodule ScreenerWeb.Models.Helpers.API do
   @moduledoc """
-  Helper functions specifically for handling API call
+    Helper functions specifically for handling API call
   """
 
   def get_stock_quotes(ticker) do

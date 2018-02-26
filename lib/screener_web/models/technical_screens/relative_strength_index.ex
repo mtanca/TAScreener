@@ -13,7 +13,7 @@ defmodule Screener.RelativeStrengthIndex do
        * RS = Average Gain / Average Loss
   """
 
-    def rsi(data, period) do
+    def rsi(data, period \\ 14) do
       avg_gain = average_gain(data, period)
       avg_loss = average_loss(data, period)
 
@@ -40,34 +40,40 @@ defmodule Screener.RelativeStrengthIndex do
 
     defp format(results) do
       results
-      |> List.flatten()
+      |> List.flatten
       |> Enum.map(fn(result) -> Float.round(result, 2) end)
     end
 
     # REWRITE/CONSOLIDATE GAINS & LOSSES FUNCTIONS INTO ONE FUNCTION!!!
     defp gains(data, diff \\ [])
-    defp gains([list_element], diff), do: format(diff)
+
+    defp gains([last_element], diff), do: format(diff)
+
     defp gains(data, diff) do
       first_element = Enum.at(data, 0)
       second_element = Enum.at(data, 1)
-      new_list = Enum.slice(data, 1..-1)
+
+      list = Enum.slice(data, 1..-1)
 
       case {first_element, second_element} do
-        {x,y} when y > x -> gains(new_list, [diff, y-x])
-        _ -> gains(new_list, diff)
+        {x,y} when y > x -> gains(list, [diff, y-x])
+        _ -> gains(list, diff)
       end
     end
 
     defp losses(data, diff \\ [])
-    defp losses([list_element], diff), do: format(diff)
+
+    defp losses([last_element], diff), do: format(diff)
+
     defp losses(data, diff) do
       first_element = Enum.at(data, 0)
       second_element = Enum.at(data, 1)
-      new_list = Enum.slice(data, 1..-1)
+
+      list = Enum.slice(data, 1..-1)
 
       case {first_element, second_element} do
-        {x,y} when y < x -> losses(new_list, [diff, x-y])
-        _ -> losses(new_list, diff)
+        {x,y} when y < x -> losses(list, [diff, x-y])
+        _ -> losses(list, diff)
       end
     end
 end
