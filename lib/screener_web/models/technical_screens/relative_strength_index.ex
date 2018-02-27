@@ -1,35 +1,49 @@
 defmodule Screener.RelativeStrengthIndex do
   alias ScreenerWeb.Models.Helpers.Math, as: MathHelper
+  alias ScreenerWeb.Models.Helpers.Quotes, as: QuoteHelper
   @moduledoc """
     Relative Strength Index (RSI) is a momentum oscillator that measures the speed and change of price movements.
-    Traditionally, and according to Wilder, RSI is considered overbought when above 70 and oversold when below 30.
 
     Formula:
                       100
         RSI = 100 - --------
                      1 + RS
-       * RS = Average Gain / Average Loss
+        RS = Average Gain / Average Loss
   """
 
   def rsi(data, period \\ 14) do
-    rs = relative_strength(data, period)
-    rsi = 100 - 100 / (1 + rs)
+    rsi = data
+    |> QuoteHelper.get_closing_prices(period)
+    |> relative_strength(period)
+    |> calculate_rsi
 
     %{"RSI" => rsi}
   end
 
-  defp relative_strength(data, period) do
-    data
-    |> Enum.take(period + 1)
-    |> Enum.reverse
-    |> average_gain_loss
-    |> calculate_averages
-    |> divide
+  # PRIVATE FUNCTIONS
+  defp avg_gain_loss(data, gains \\ [], losses \\ [])
+
+  defp avg_gain_loss([last_element], gains, losses) do
+    Enum.map([gains, losses], fn(list) -> format(list) end)
   end
 
-  defp calculate_averages(map) do
-    Enum.map(map, fn{_key, list} ->
-      Enum.reduce(list, 0, fn(x, acc) -> x + acc end) / 14 end)
+  defp avg_gain_loss(data, gains, losses) do
+    [newer, older] = [Enum.at(data, 0), Enum.at(data, 1)]
+    list = Enum.slice(data, 1..-1)
+
+    case {newer, older} do
+      {x, y} when y > x -> avg_gain_loss(list, [gains, y - x], losses)
+      {x, y} when y < x -> avg_gain_loss(list, gains, [losses, x - y])
+      _ -> "Raise Error Here"
+    end
+  end
+
+  defp calculate_averages(lists, period) do
+    Enum.map(lists, fn(list) -> MathHelper.calculate_average / period end)
+  end
+
+  defp calculate_rsi(rs) do
+    100 - 100 / (1 + rs)
   end
 
   defp divide(lists) do
@@ -42,24 +56,13 @@ defmodule Screener.RelativeStrengthIndex do
     |> Enum.map(fn(result) -> Float.round(result, 2) end)
   end
 
-  defp average_gain_loss(data, gains \\ [], losses \\ [])
-
-  defp average_gain_loss([last_element], gains, losses) do
-    results = Enum.map([gains, losses], fn(list) -> format(list) end)
-
-    %{gains: Enum.at(results, 0), losses: Enum.at(results, 1)}
+  defp relative_strength(data, period) do
+    data
+    |> Enum.take(period + 1)
+    |> Enum.reverse
+    |> avg_gain_loss
+    |> calculate_averages(period)
+    |> divide
   end
 
-  defp average_gain_loss(data, gains, losses) do
-    first_element = Enum.at(data, 0)
-    second_element = Enum.at(data, 1)
-
-    list = Enum.slice(data, 1..-1)
-
-    case {first_element, second_element} do
-      {x, y} when y > x -> average_gain_loss(list, [gains, y-x], losses)
-      {x, y} when y < x -> average_gain_loss(list, gains, [losses, x-y])
-      _ -> "Raise Error Here"
-    end
-  end
 end

@@ -4,7 +4,7 @@ defmodule ScreenerWeb.Models.Helpers.API do
   """
 
   def get_stock_quotes(ticker) do
-    key  = System.get_env("API_KEY")
+    key = System.get_env("API_KEY")
     url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=#{ticker}&apikey=#{key}"
 
     case HTTPoison.get(url) do
