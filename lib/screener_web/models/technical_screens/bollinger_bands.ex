@@ -1,5 +1,6 @@
 defmodule ScreenerWeb.BollingerBands do
   alias ScreenerWeb.Models.Helpers.Math, as: MathHelper
+  alias ScreenerWeb.Models.Helpers.Quotes, as: QuoteHelper
   @moduledoc """
 
     Bollinger Bands® are volatility bands placed above and below a moving average.
@@ -14,42 +15,19 @@ defmodule ScreenerWeb.BollingerBands do
 
   def bollinger_bands(data, period \\ 20) do
     average = data
-    |> get_closing_prices(period)
+    |> QuoteHelper.get_closing_prices(period)
     |> MathHelper.calculate_average
 
     std = data
-    |> get_closing_prices(period)
+    |> QuoteHelper.get_closing_prices(period)
     |> MathHelper.calculate_standard_deviation
 
     get_bands(average, std)
   end
 
   # PRIVATE FUNCTIONS
-  defp convert_prices_to_int(prices) do
-    prices
-    |> Enum.map(fn price -> Float.parse(price) end)
-    |> Enum.map(fn {price, _empty_string} -> price end)
-  end
-
-  defp find_closing_prices(data) do
-    Enum.map(data, fn {_date, single_quote} ->
-      Enum.find(single_quote, fn {field, value} -> field == "4. close"  end) end)
-  end
-
-  defp format_as_list(tuple) do
-    Enum.map(tuple, fn {_key, closing_prices} -> closing_prices end)
-  end
-
   defp get_bands(avg, std) do
     %{"Lower Band" => lower_band(avg, std), "Upper Band" => upper_band(avg, std)}
-  end
-
-  defp get_closing_prices(data, period) do
-    data
-    |> find_closing_prices
-    |> format_as_list
-    |> convert_prices_to_int
-    |> Enum.take(period)
   end
 
   defp lower_band(average, std) do
