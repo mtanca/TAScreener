@@ -3,10 +3,10 @@ defmodule ScreenerWeb.Controllers.Helpers do
   alias ScreenerWeb.TechnicalAnalysis, as: TA
 
   def get_quote_and_indicators(quotes) do
-    q = StockQuote.retrieve_latest_quote(quotes)
+    q = Task.async fn -> StockQuote.retrieve_latest_quote(quotes) end
     indicators = TA.get_indicators(quotes)
 
-    %{data: q, technical_indicators: indicators}
+    %{data: Task.await(q), technical_indicators: indicators}
   end
 
   def get_quotes_and_indicators(quotes) do

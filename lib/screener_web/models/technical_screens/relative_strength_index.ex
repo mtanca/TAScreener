@@ -17,7 +17,7 @@ defmodule Screener.RelativeStrengthIndex do
     |> relative_strength(period)
     |> calculate_rsi
 
-    %{"RSI" => rsi}
+    %{"index value" => rsi}
   end
 
   # PRIVATE FUNCTIONS
@@ -39,7 +39,7 @@ defmodule Screener.RelativeStrengthIndex do
   end
 
   defp calculate_averages(lists, period) do
-    Enum.map(lists, fn(list) -> MathHelper.calculate_average / period end)
+    Enum.map(lists, fn(list) -> MathHelper.calculate_average(list) / period end)
   end
 
   defp calculate_rsi(rs) do

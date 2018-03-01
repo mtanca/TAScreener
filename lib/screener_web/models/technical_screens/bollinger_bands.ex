@@ -22,7 +22,7 @@ defmodule ScreenerWeb.BollingerBands do
     |> QuoteHelper.get_closing_prices(period)
     |> MathHelper.calculate_standard_deviation
 
-    get_bands(average, std)
+    get_bands(average, std) 
   end
 
   # PRIVATE FUNCTIONS
