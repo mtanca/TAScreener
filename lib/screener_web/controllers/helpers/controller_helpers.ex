@@ -9,7 +9,7 @@ defmodule ScreenerWeb.Controllers.Helpers do
     %{data: Task.await(q), technical_indicators: indicators}
   end
 
-  def get_quote_with_indicators(quotes) do
+  def get_quotes_with_indicators(quotes) do
     indicators = TA.get_indicators(quotes)
 
     %{data: quotes, technical_indicators: indicators}
