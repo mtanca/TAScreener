@@ -9,7 +9,7 @@ defmodule ScreenerWeb.StockQuoteController do
     response =
     case results do
       {:error, reason} -> Helpers.handle_error(reason)
-      {:ok, quotes} -> Helpers.get_quote_and_indicators(quotes)
+      {:ok, quotes} -> Helpers.get_quote_with_indicators(quotes)
     end
 
     render conn, "show.html", response: response

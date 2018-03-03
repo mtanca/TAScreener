@@ -1,4 +1,4 @@
-defmodule ScreenerWeb.BollingerBands do
+defmodule ScreenerWeb.Models.BollingerBands do
   alias ScreenerWeb.Models.Helpers.Math, as: MathHelper
   alias ScreenerWeb.Models.Helpers.Quotes, as: QuoteHelper
   @moduledoc """
@@ -22,7 +22,7 @@ defmodule ScreenerWeb.BollingerBands do
     |> QuoteHelper.get_closing_prices(period)
     |> MathHelper.calculate_standard_deviation
 
-    get_bands(average, std) 
+    get_bands(average, std)
   end
 
   # PRIVATE FUNCTIONS
