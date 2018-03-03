@@ -1,5 +1,4 @@
 defmodule ScreenerWeb.Views.Helpers do
-  require IEx
   @moduledoc """
   """
 

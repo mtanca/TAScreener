@@ -1,4 +1,4 @@
-defmodule ScreenerWeb.StockQuote do
+defmodule ScreenerWeb.Models.StockQuote do
   @moduledoc """
   """
 

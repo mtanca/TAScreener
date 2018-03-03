@@ -9,7 +9,7 @@ defmodule ScreenerWeb.HistoryController do
     response =
     case results do
       {:error, reason} -> Helpers.handle_error(reason)
-      {:ok, quotes} -> Helpers.get_quotes_and_indicators(quotes)
+      {:ok, quotes} -> Helpers.get_quotes_with_indicators(quotes)
     end
 
     render conn, "show.html", response: response

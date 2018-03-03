@@ -1,4 +1,4 @@
-defmodule Screener.RelativeStrengthIndex do
+defmodule ScreenerWeb.Models.RelativeStrengthIndex do
   alias ScreenerWeb.Models.Helpers.Math, as: MathHelper
   alias ScreenerWeb.Models.Helpers.Quotes, as: QuoteHelper
   @moduledoc """
@@ -28,10 +28,10 @@ defmodule Screener.RelativeStrengthIndex do
   end
 
   defp avg_gain_loss(data, gains, losses) do
-    [newer, older] = [Enum.at(data, 0), Enum.at(data, 1)]
+    [older, newer] = [Enum.at(data, 0), Enum.at(data, 1)]
     list = Enum.slice(data, 1..-1)
 
-    case {newer, older} do
+    case {older, newer} do
       {x, y} when y > x -> avg_gain_loss(list, [gains, y - x], losses)
       {x, y} when y < x -> avg_gain_loss(list, gains, [losses, x - y])
       _ -> "Raise Error Here"
