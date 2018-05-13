@@ -32,9 +32,10 @@ defmodule ScreenerWeb.Models.RelativeStrengthIndex do
     list = Enum.slice(data, 1..-1)
 
     case {older, newer} do
-      {x, y} when y > x -> avg_gain_loss(list, [gains, y - x], losses)
+      # {x, y} when y == x -> avg_gain_loss(list, gains, losses)
+      {x, y} when y >= x -> avg_gain_loss(list, [gains, y - x], losses)
       {x, y} when y < x -> avg_gain_loss(list, gains, [losses, x - y])
-      _ -> "Raise Error Here"
+      _ -> raise "Data is no good! Bail!"
     end
   end
 
@@ -58,11 +59,16 @@ defmodule ScreenerWeb.Models.RelativeStrengthIndex do
 
   defp relative_strength(data, period) do
     data
-    |> Enum.take(period + 1)
+    |> Enum.take(period)
     |> Enum.reverse
     |> avg_gain_loss
     |> calculate_averages(period)
+    |> smooth_averages(period)
     |> divide
+  end
+
+  defp smooth_averages(avgs, period) do
+    Enum.map(avgs, fn(avg) -> (avg * 13) / period end)
   end
 
 end
