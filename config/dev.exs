@@ -51,7 +51,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :screener, Screener.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
+  username: "mtanca",
   password: "postgres",
   database: "screener_dev",
   hostname: "localhost",

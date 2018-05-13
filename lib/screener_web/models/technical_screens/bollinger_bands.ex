@@ -14,15 +14,17 @@ defmodule ScreenerWeb.Models.BollingerBands do
  """
 
   def bollinger_bands(data, period \\ 20) do
-    average = data
+    average = Task.async(fn ->
+    data
     |> QuoteHelper.get_closing_prices(period)
-    |> MathHelper.calculate_average
+    |> MathHelper.calculate_average end)
 
-    std = data
+    std = Task.async(fn ->
+    data
     |> QuoteHelper.get_closing_prices(period)
-    |> MathHelper.calculate_standard_deviation
+    |> MathHelper.calculate_standard_deviation end)
 
-    get_bands(average, std)
+    get_bands(Task.await(average), Task.await(std))
   end
 
   # PRIVATE FUNCTIONS

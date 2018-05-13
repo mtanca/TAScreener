@@ -22,15 +22,6 @@ defmodule ScreenerWeb.Models.Helpers.API do
     Poison.decode(quotes_as_json)
   end
 
-  defp handle_status_200(data) do
-    case data do
-      {:ok, %{"Error Message" => error_msg}} ->
-        return_error_status(error_msg)
-      _ ->
-        format_results(data)
-    end
-  end
-
   defp format_results(results) do
     {_status, data} =  results
     quotes = data["Time Series (Daily)"]
@@ -38,6 +29,15 @@ defmodule ScreenerWeb.Models.Helpers.API do
     quotes
     |> sort_by_descending_date
     |> return_ok_status
+  end
+
+  defp handle_status_200(data) do
+    case data do
+      {:ok, %{"Error Message" => error_msg}} ->
+        return_error_status(error_msg)
+      _ ->
+        format_results(data)
+    end
   end
 
   defp sort_by_descending_date(formatted_data) do
